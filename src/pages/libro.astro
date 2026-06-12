@@ -1,0 +1,137 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const jsonLdBook = {
+  "@context": "https://schema.org",
+  "@type": "Book",
+  "name": "Zen ai tempi dell'AI",
+  "alternateName": "Come restare lucidi, mentre fuori il mondo accelera",
+  "author": {
+    "@type": "Person",
+    "name": "Lucia S.",
+    "url": "https://essere-zen.vercel.app/chi-sono"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Essere Zen"
+  },
+  "inLanguage": "it",
+  "datePublished": "2026-06-01",
+  "image": "https://essere-zen.vercel.app/images/copertina-libro.jpg",
+  "description": "Una pratica zen sobria per restare lucidi mentre il mondo accelera per noi. In un'epoca in cui gli algoritmi si offrono di pensare al posto nostro, lo zen propone qualcosa di scomodo: restare proprietari della propria vita.",
+  "url": "https://www.amazon.it/dp/B0H3KBQL9P",
+  "offers": {
+    "@type": "Offer",
+    "price": "4.99",
+    "priceCurrency": "EUR",
+    "url": "https://www.amazon.it/dp/B0H3KBQL9P",
+    "availability": "https://schema.org/InStock"
+  }
+};
+
+const capitoli = [
+  { num: 'Introduzione', titolo: 'Trenta secondi al semaforo' },
+  { num: 'Capitolo 1', titolo: 'Il rumore che hai smesso di sentire' },
+  { num: 'Capitolo 2', titolo: 'Cos\'è lo zen, davvero' },
+  { num: 'Capitolo 3', titolo: 'La mente accelerata, e i suoi danni' },
+  { num: 'Capitolo 4', titolo: 'Il vuoto come strumento di intelligenza' },
+  { num: 'Capitolo 5', titolo: 'Il proprio ritmo, in un mondo che impone quello dell\'algoritmo' },
+  { num: 'Capitolo 6', titolo: 'Una pratica per cominciare' }
+];
+
+const quotes = [
+  '"Vivere è facile. Restare svegli mentre lo si fa, no."',
+  '"Lo zen non vi chiede di aggiungere niente. Vi chiede di togliere."',
+  '"Riprendervi il vostro tempo è un atto politico. E, semplicemente, un atto di sopravvivenza."'
+];
+---
+<Layout 
+  title="Zen ai tempi dell'AI | Il libro di Lucia S."
+  description="Il libro di Lucia S., voce del canale Essere Zen. Una pratica zen sobria per restare lucidi mentre fuori il mondo accelera. Su Amazon, €4,99."
+  type="article">
+  
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLdBook)} />
+  
+  <section class="max-w-5xl mx-auto px-6 py-20">
+    <div class="grid md:grid-cols-2 gap-16 items-start">
+      <div class="md:sticky md:top-24">
+        <img src="/images/copertina-libro.jpg" 
+             alt="Copertina del libro Zen ai tempi dell'AI"
+             class="w-full max-w-md shadow-2xl rounded-sm mx-auto"
+             width="500" height="750" />
+        <div class="mt-8 space-y-3">
+          <a href="https://www.amazon.it/dp/B0H3KBQL9P" 
+             target="_blank" rel="noopener noreferrer"
+             class="block w-full max-w-md mx-auto text-center bg-ink text-cream px-6 py-4 rounded-sm hover:bg-cobalt transition-colors font-medium">
+            Acquista su Amazon — €4,99
+          </a>
+          <p class="text-center text-sm text-muted">eBook Kindle · Italiano · ~150 pagine</p>
+        </div>
+      </div>
+      
+      <div>
+        <p class="text-sm uppercase tracking-widest text-muted mb-3">Il libro</p>
+        <h1 class="font-serif text-5xl font-semibold mb-4 leading-tight">Zen ai tempi dell'AI</h1>
+        <p class="font-serif italic text-2xl text-ink-soft mb-8">
+          Come restare lucidi, mentre fuori il mondo accelera
+        </p>
+        
+        <div class="prose-zen">
+          <p>
+            Trenta secondi al semaforo. La mano va al telefono prima ancora che il cervello decida. Da quella scena minuscola, ripetuta cento volte al giorno, parte un libro sulla cosa più rara nel 2026: <strong>restare lucidi</strong> mentre il mondo accelera per noi.
+          </p>
+          <p>
+            Lo zen non è una fuga dalla velocità del mondo. È un modo di restarci dentro senza farsi sostituire. In un'epoca in cui gli algoritmi si offrono di pensare, sentire e rispondere al posto vostro, e una nuova generazione di assistenti AI consegna idee già costruite prima che le vostre abbiano avuto il tempo di formarsi, questo libro propone una pratica essenziale per tornare proprietari della propria vita.
+          </p>
+          
+          <h2>Il pensiero prefabbricato</h2>
+          <p>
+            Lucia S. conia un'espressione destinata a entrare nel lessico critico del presente: <em>pensiero prefabbricato</em>. La sagoma di idea che gli algoritmi vi mettono davanti, costruita altrove da un sistema statistico, che vi arriva già pronta prima che il pensiero stesso abbia avuto il tempo di emergere. Accettato cento volte al giorno, smonta lentamente la capacità di pensare da soli.
+          </p>
+          
+          <h2>Cosa promette questo libro</h2>
+          <p>
+            Una definizione di zen in una riga, da tenere in tasca. Capire perché la mente non si ferma mai. E una sola pratica, alla fine, da cinque minuti al giorno. Sostenibile per anni.
+          </p>
+          <p>
+            Non promette pace. Non promette serenità. Non promette di "ritrovare se stessi". Promette una cosa più piccola e più onesta: capire da dove viene il rumore. Da quella comprensione, eventualmente, viene altro. Forse la pace. Forse no. Ma intanto, di sicuro, viene la lucidità. E in un mondo che accelera per noi, la lucidità è già parecchio.
+          </p>
+        </div>
+        
+        <div class="mt-12">
+          <h2 class="font-serif text-2xl font-semibold mb-6">Indice</h2>
+          <ul class="space-y-2 text-ink-soft">
+            {capitoli.map(c => (
+              <li class="flex gap-3">
+                <span class="font-medium text-ink min-w-[120px]">{c.num}</span>
+                <span>{c.titolo}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="text-sm text-muted mt-4 italic">Più tre appendici e una conclusione.</p>
+        </div>
+        
+        <div class="mt-12">
+          <h2 class="font-serif text-2xl font-semibold mb-6">Estratti</h2>
+          <div class="space-y-6">
+            {quotes.map(q => (
+              <blockquote class="border-l-2 border-cobalt pl-6 font-serif italic text-lg text-ink-soft">
+                {q}
+              </blockquote>
+            ))}
+          </div>
+        </div>
+        
+        <div class="mt-12 bg-cream-dark/40 p-8 rounded-sm">
+          <h2 class="font-serif text-2xl font-semibold mb-4">A chi parla questo libro</h2>
+          <ul class="space-y-2 text-ink-soft">
+            <li>→ A chi non sa più stare in fila senza prendere il telefono</li>
+            <li>→ A chi si sente in colpa per essere stanco senza una ragione precisa</li>
+            <li>→ A chi sospetta che dieci anni di scrolling abbiano cambiato qualcosa di profondo, e non sa cosa</li>
+            <li>→ A chi cerca un libro sullo zen che non sia spirituale-kitsch, ma adulto, sobrio, contemporaneo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

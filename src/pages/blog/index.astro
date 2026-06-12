@@ -1,0 +1,40 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+<Layout 
+  title="Blog | Essere Zen"
+  description="Riflessioni su zen, mindfulness e intelligenza artificiale. Articoli di Lucia S., autrice del libro 'Zen ai tempi dell'AI'.">
+  
+  <section class="max-w-4xl mx-auto px-6 py-20">
+    <header class="mb-16 text-center">
+      <p class="text-sm uppercase tracking-widest text-muted mb-3">Blog</p>
+      <h1 class="font-serif text-5xl font-semibold mb-4">Letture lente</h1>
+      <p class="text-ink-soft text-lg max-w-2xl mx-auto">
+        Riflessioni su zen, mindfulness e intelligenza artificiale. Niente decaloghi, niente promesse rapide. Solo testi da leggere con calma.
+      </p>
+    </header>
+    
+    <div class="space-y-12">
+      {posts.map(post => (
+        <article class="border-b border-gray-200/50 pb-12">
+          <a href={`/blog/${post.id}`} class="group block">
+            <p class="text-xs text-muted uppercase tracking-wider mb-3">
+              {new Date(post.data.pubDate).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}
+            </p>
+            <h2 class="font-serif text-3xl font-semibold mb-3 group-hover:text-cobalt transition-colors">
+              {post.data.title}
+            </h2>
+            <p class="text-ink-soft text-lg leading-relaxed">{post.data.description}</p>
+            <p class="text-cobalt mt-4 text-sm font-medium group-hover:underline">
+              Continua a leggere →
+            </p>
+          </a>
+        </article>
+      ))}
+    </div>
+  </section>
+</Layout>

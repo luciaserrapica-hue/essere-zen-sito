@@ -1,0 +1,51 @@
+---
+const channels = [
+  {
+    name: 'YouTube',
+    handle: '@ESSEREZEN',
+    description: 'Video lunghi su zen, mindfulness, presenza',
+    url: 'https://youtube.com/@ESSEREZEN',
+    icon: '▶'
+  },
+  {
+    name: 'Instagram',
+    handle: '@essere.zen',
+    description: 'Frasi, reel, momenti di pratica',
+    url: '#',
+    icon: '◉'
+  },
+  {
+    name: 'TikTok',
+    handle: '@essere.zen',
+    description: 'Brevi spunti di riflessione quotidiana',
+    url: '#',
+    icon: '♪'
+  }
+];
+---
+<section class="py-20 bg-cream-dark/40">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="text-center mb-12">
+      <p class="text-sm uppercase tracking-widest text-muted mb-3">Dove mi trovi</p>
+      <h2 class="font-serif text-4xl font-semibold mb-4">Seguimi sui canali</h2>
+      <p class="text-ink-soft max-w-2xl mx-auto">
+        Nuovi contenuti ogni settimana. Scegli il formato che preferisci.
+      </p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      {channels.map(channel => (
+        <a href={channel.url} 
+           target="_blank" rel="noopener noreferrer"
+           class="block p-8 bg-cream border border-gray-200/60 rounded-sm hover:border-cobalt hover:shadow-lg transition-all group">
+          <div class="text-3xl text-cobalt mb-4">{channel.icon}</div>
+          <h3 class="font-serif text-2xl font-semibold mb-1">{channel.name}</h3>
+          <p class="text-muted text-sm mb-3">{channel.handle}</p>
+          <p class="text-ink-soft">{channel.description}</p>
+          <p class="text-cobalt mt-4 text-sm font-medium group-hover:underline">
+            Vai al canale →
+          </p>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

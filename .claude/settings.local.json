@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(npm install *)",
+      "PowerShell(Get-Process | Where-Object { $_.ProcessName -match \"node|npm\" } | Select-Object ProcessName,Id,StartTime)",
+      "Bash(NODE_OPTIONS=--use-system-ca npm install)",
+      "Bash(NODE_OPTIONS=--use-system-ca npm run build)",
+      "mcp__claude_ai_Vercel__deploy_to_vercel",
+      "Bash(NODE_OPTIONS=--use-system-ca npx vercel --version)",
+      "Bash(NODE_OPTIONS=--use-system-ca npx vercel whoami)",
+      "Bash(gh --version)",
+      "Bash(gh auth *)",
+      "Bash(git *)",
+      "mcp__claude_ai_Vercel__list_teams",
+      "mcp__claude_ai_Vercel__list_projects"
+    ]
+  }
+}

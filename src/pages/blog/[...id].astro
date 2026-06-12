@@ -1,0 +1,82 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map(post => ({
+    params: { id: post.id },
+    props: { post }
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": post.data.title,
+  "description": post.data.description,
+  "datePublished": post.data.pubDate.toISOString(),
+  "dateModified": (post.data.updatedDate || post.data.pubDate).toISOString(),
+  "author": {
+    "@type": "Person",
+    "name": "Lucia S.",
+    "url": "https://essere-zen.vercel.app/chi-sono"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Essere Zen",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://essere-zen.vercel.app/favicon.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `https://essere-zen.vercel.app/blog/${post.id}`
+  }
+};
+---
+<Layout 
+  title={`${post.data.title} | Essere Zen`}
+  description={post.data.description}
+  type="article"
+  publishedTime={post.data.pubDate.toISOString()}
+  modifiedTime={post.data.updatedDate?.toISOString()}
+  keywords={post.data.tags?.join(', ')}>
+  
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  
+  <article class="max-w-3xl mx-auto px-6 py-20">
+    <header class="mb-12 text-center">
+      <p class="text-xs text-muted uppercase tracking-wider mb-4">
+        {new Date(post.data.pubDate).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}
+      </p>
+      <h1 class="font-serif text-4xl md:text-5xl font-semibold mb-6 leading-tight">
+        {post.data.title}
+      </h1>
+      <p class="text-ink-soft text-xl italic font-serif max-w-2xl mx-auto leading-relaxed">
+        {post.data.description}
+      </p>
+    </header>
+    
+    <div class="prose-zen">
+      <Content />
+    </div>
+    
+    <aside class="mt-20 p-8 bg-cream-dark/40 rounded-sm border border-gray-200/50">
+      <p class="text-sm uppercase tracking-widest text-muted mb-3">Il libro</p>
+      <h2 class="font-serif text-2xl font-semibold mb-3">Zen ai tempi dell'AI</h2>
+      <p class="text-ink-soft mb-6">
+        Se questo articolo ti ha parlato, lo trovi tutto sviluppato in profondità nel libro. Una pratica zen sobria per restare lucidi mentre fuori il mondo accelera.
+      </p>
+      <a href="https://www.amazon.it/dp/B0H3KBQL9P" 
+         target="_blank" rel="noopener noreferrer"
+         class="inline-block bg-ink text-cream px-6 py-3 rounded-sm hover:bg-cobalt transition-colors font-medium">
+        Acquista su Amazon — €4,99
+      </a>
+    </aside>
+  </article>
+</Layout>

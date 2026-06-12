@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", "Georgia", "Times New Roman", serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --color-cream: #F5F1E8;
+  --color-cream-dark: #ECE6D5;
+  --color-ink: #1A1A1A;
+  --color-ink-soft: #4A4A4A;
+  --color-muted: #7A7A7A;
+  --color-cobalt: #2C4A7C;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-cream);
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background-color: var(--color-cream);
+  font-feature-settings: "kern", "liga";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.prose-zen {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--color-ink);
+}
+
+.prose-zen p { margin-bottom: 1.2em; }
+.prose-zen h2 { font-size: 1.875rem; margin-top: 2.5em; margin-bottom: 0.8em; }
+.prose-zen h3 { font-size: 1.4rem; margin-top: 2em; margin-bottom: 0.6em; font-style: italic; }
+.prose-zen blockquote {
+  border-left: 3px solid var(--color-cobalt);
+  padding-left: 1.5em;
+  margin: 1.5em 0;
+  font-style: italic;
+  color: var(--color-ink-soft);
+}
+.prose-zen a {
+  color: var(--color-cobalt);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

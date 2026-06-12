@@ -1,0 +1,82 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import SocialChannels from '../components/SocialChannels.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Lucia S.",
+  "url": "https://essere-zen.vercel.app",
+  "sameAs": [
+    "https://youtube.com/@ESSEREZEN"
+  ],
+  "jobTitle": "Autrice",
+  "knowsAbout": ["zen", "mindfulness", "meditazione", "intelligenza artificiale"]
+};
+---
+<Layout 
+  title="Essere Zen | Lucia S. — Zen ai tempi dell'AI"
+  description="Una pratica zen sobria per restare lucidi in un mondo che accelera per noi. Il libro 'Zen ai tempi dell'AI' di Lucia S. è disponibile su Amazon.">
+  
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  
+  <Hero />
+  
+  <section class="py-20">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <p class="text-sm uppercase tracking-widest text-muted mb-3">Il concetto-marchio</p>
+      <h2 class="font-serif text-4xl md:text-5xl font-semibold mb-8">Il pensiero prefabbricato</h2>
+      <blockquote class="font-serif italic text-2xl text-ink-soft leading-relaxed border-l-2 border-cobalt pl-8 text-left">
+        La sagoma di un vostro pensiero, costruita altrove da un sistema statistico, che vi arriva già pronta prima che il pensiero stesso abbia avuto il tempo di formarsi.
+      </blockquote>
+      <p class="text-ink-soft mt-10 max-w-2xl mx-auto leading-relaxed">
+        È la categoria nuova che il libro propone per leggere il nostro rapporto con l'AI generativa. Una pratica zen, oggi, è anche l'antidoto al lasciar pensare gli algoritmi al posto nostro.
+      </p>
+      <a href="/libro" class="inline-block mt-8 text-cobalt font-medium hover:underline">
+        Scopri il libro →
+      </a>
+    </div>
+  </section>
+  
+  <SocialChannels />
+  
+  {allPosts.length > 0 && (
+    <section class="py-20">
+      <div class="max-w-5xl mx-auto px-6">
+        <div class="text-center mb-12">
+          <p class="text-sm uppercase tracking-widest text-muted mb-3">Dal blog</p>
+          <h2 class="font-serif text-4xl font-semibold">Ultimi articoli</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+          {allPosts.map(post => (
+            <article class="group">
+              <a href={`/blog/${post.id}`} class="block">
+                <p class="text-xs text-muted uppercase tracking-wider mb-2">
+                  {new Date(post.data.pubDate).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}
+                </p>
+                <h3 class="font-serif text-2xl font-semibold mb-3 group-hover:text-cobalt transition-colors">
+                  {post.data.title}
+                </h3>
+                <p class="text-ink-soft leading-relaxed">{post.data.description}</p>
+                <p class="text-cobalt mt-4 text-sm font-medium group-hover:underline">
+                  Leggi →
+                </p>
+              </a>
+            </article>
+          ))}
+        </div>
+        <div class="text-center mt-12">
+          <a href="/blog" class="inline-block border border-ink text-ink px-6 py-3 rounded-sm hover:bg-ink hover:text-cream transition-colors font-medium">
+            Tutti gli articoli →
+          </a>
+        </div>
+      </div>
+    </section>
+  )}
+</Layout>
