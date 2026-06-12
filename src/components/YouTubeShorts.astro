@@ -1,0 +1,73 @@
+---
+const CHANNEL_ID = 'UCLKlj7NF0c_X5_hKJLcedyg';
+const CHANNEL_HANDLE = '@ESSEREZEN';
+const FEED_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
+
+type Short = { videoId: string; title: string; published: string };
+
+let shorts: Short[] = [];
+try {
+  const response = await fetch(FEED_URL);
+  const xml = await response.text();
+  const entries = xml.split('<entry>').slice(1, 5);
+  shorts = entries.map(entry => {
+    const videoId = entry.match(/<yt:videoId>([^<]+)<\/yt:videoId>/)?.[1] ?? '';
+    const title = entry.match(/<title>([^<]+)<\/title>/)?.[1] ?? '';
+    const published = entry.match(/<published>([^<]+)<\/published>/)?.[1] ?? '';
+    return { videoId, title, published };
+  }).filter(s => s.videoId).slice(0, 3);
+} catch {
+  shorts = [];
+}
+
+const fmtDate = (iso: string) =>
+  new Date(iso).toLocaleDateString('it-IT', { day: 'numeric', month: 'long' });
+---
+{shorts.length > 0 && (
+  <section class="py-20 bg-cream-dark/40">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <p class="text-sm uppercase tracking-widest text-muted mb-3">Dal canale YouTube</p>
+        <h2 class="font-serif text-4xl font-semibold mb-4">Ultimi shorts</h2>
+        <p class="text-ink-soft max-w-2xl mx-auto">
+          Un minuto al giorno di riflessione zen. Aggiornato in automatico ad ogni pubblicazione.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        {shorts.map(short => (
+          <a href={`https://www.youtube.com/shorts/${short.videoId}`}
+             target="_blank" rel="noopener noreferrer"
+             class="group block bg-cream border border-gray-200/60 rounded-sm overflow-hidden hover:border-cobalt hover:shadow-lg transition-all">
+            <div class="relative aspect-[9/16] bg-ink overflow-hidden">
+              <img src={`https://i.ytimg.com/vi/${short.videoId}/hqdefault.jpg`}
+                   alt={short.title}
+                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                   loading="lazy"
+                   width="480" height="360" />
+              <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div class="w-16 h-16 rounded-full bg-cream/90 flex items-center justify-center group-hover:bg-cobalt transition-colors">
+                  <svg class="w-7 h-7 text-ink group-hover:text-cream transition-colors ml-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="p-5">
+              <p class="text-xs text-muted uppercase tracking-wider mb-2">{fmtDate(short.published)}</p>
+              <h3 class="font-serif text-lg font-semibold leading-snug group-hover:text-cobalt transition-colors">
+                {short.title}
+              </h3>
+            </div>
+          </a>
+        ))}
+      </div>
+      <div class="text-center mt-12">
+        <a href={`https://www.youtube.com/${CHANNEL_HANDLE}/shorts`}
+           target="_blank" rel="noopener noreferrer"
+           class="inline-block border border-ink text-ink px-6 py-3 rounded-sm hover:bg-ink hover:text-cream transition-colors font-medium">
+          Tutti gli shorts →
+        </a>
+      </div>
+    </div>
+  </section>
+)}

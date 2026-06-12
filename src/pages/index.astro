@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import SocialChannels from '../components/SocialChannels.astro';
+import YouTubeShorts from '../components/YouTubeShorts.astro';
 import { getCollection } from 'astro:content';
 
 const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
@@ -44,8 +45,10 @@ const jsonLd = {
     </div>
   </section>
   
+  <YouTubeShorts />
+
   <SocialChannels />
-  
+
   {allPosts.length > 0 && (
     <section class="py-20">
       <div class="max-w-5xl mx-auto px-6">

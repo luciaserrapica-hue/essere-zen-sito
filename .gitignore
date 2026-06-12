@@ -18,6 +18,9 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
+# Claude Code session files (mai committare, possono contenere token)
+.claude/
+
 # Cache
 .astro/
 .cache/

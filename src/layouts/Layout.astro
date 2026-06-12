@@ -58,7 +58,9 @@ const fullImage = new URL(image, Astro.site).toString();
   
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="Essere Zen" href="/rss.xml" />
-  
+
+  <script defer src="/_vercel/insights/script.js"></script>
+
   <slot name="head" />
 </head>
 <body class="min-h-screen flex flex-col">
